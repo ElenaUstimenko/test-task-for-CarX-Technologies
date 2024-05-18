@@ -1,0 +1,13 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--bg-color-primary);
+  font-size: var(--font-size-primary);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight);
+  color: var(--text-color-primary);
+  transition: all var(--transition-duration) var(--transition-timing-fn);
+}

@@ -1,0 +1,43 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.titleNumber {
+  margin-bottom: 90px;
+  font-size: var(--font-size-secondary);
+}
+
+.titleText {
+  margin-bottom: 60px;
+}
+
+.link {
+  position: relative;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: var(--text-color-secondary);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--bg-color-secondary);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.3s;
+    opacity: 0.4;
+  }
+
+  &:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+
+  &:hover .linkText {
+    color: var(--text-color-primary);
+  }
+}

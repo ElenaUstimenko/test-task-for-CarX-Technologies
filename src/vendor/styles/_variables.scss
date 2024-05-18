@@ -1,0 +1,25 @@
+:root {
+  --bg-color-primary: rgb(37, 37, 49);
+  --bg-color-secondary: rgb(76, 76, 76);
+  --bg-color-secondary-opacity: rgb(76, 76, 76, 0.2);
+  --bg-color-overlay: rgba(0, 0, 0, 0.4);
+  --text-color-primary: rgb(233, 233, 234, 0.8);
+  --text-color-secondary: rgb(255, 217, 102);
+  --text-color-third: rgb(121, 116, 116);
+  --text-color-error: rgb(162, 76, 145);
+  --text-color-disabled: rgb(37, 37, 49);
+  --box-shadow-color: rgba(255, 217, 102, 0.1);
+  --font-size-primary: max(1.3em, min(2.3em, 2.3vw));
+  --font-size-secondary: max(3.9em, min(6.9em, 6.9vw));
+  --font-size-third: 16px;
+  --font-size-error: 14px;
+  --font-weight: 400;
+  --line-height: 1.2;
+  --transition-duration: 0.3s;
+  --transition-timing-fn: ease-in-out;
+  --border: 2px solid var(--bg-color-secondary);
+  --border-bottom: 2px solid var(--text-color-secondary);
+  --border-radius: 5px;
+  --z-index-modal: 20;
+  --z-index-overlay: 10;
+}
