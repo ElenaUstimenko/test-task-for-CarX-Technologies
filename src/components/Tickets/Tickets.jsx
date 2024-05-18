@@ -4,14 +4,7 @@ import InfoPopup from '../InfoPopup/InfoPopup';
 import styles from './Tickets.module.scss';
 
 const Tickets = props => {
-  const {
-    isLoggedIn,
-    setIsLoggedIn,
-    setInfoPopup,
-    setInfoPopupText,
-    isEditable,
-    setIsEditable
-  } = props;
+  const { setInfoPopup, setInfoPopupText, isEditable, setIsEditable } = props;
   const { id } = useParams();
   const [textComment, setTextComment] = useState('');
   const [comments, setComments] = useState([]);

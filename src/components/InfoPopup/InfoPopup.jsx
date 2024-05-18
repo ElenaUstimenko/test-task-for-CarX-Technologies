@@ -1,15 +1,7 @@
-/*import { useParams } from 'react-router-dom';*/
 import styles from './InfoPopup.module.scss';
 
 const InfoPopup = props => {
-  const {
-    title,
-    isOpen,
-    onClose,
-    onSubmit,
-    setIsEditable /*, openedRequestId*/
-  } = props;
-  /*const { id } = useParams();*/
+  const { title, isOpen, onClose, onSubmit, setIsEditable } = props;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -18,7 +10,6 @@ const InfoPopup = props => {
 
   const handlePopupClose = () => {
     setIsEditable(false);
-    /*localStorage.setItem(`blocked_${openedRequestId}`, true);*/
     onSubmit();
   };
 

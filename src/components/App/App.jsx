@@ -31,8 +31,6 @@ const App = () => {
               <Main
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn}
               />
             ) : (
               <Navigate to='/login' replace />
@@ -46,8 +44,6 @@ const App = () => {
               <Tickets
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn}
                 setIsEditable={setIsEditable}
                 isEditable={isEditable}
               />
@@ -84,9 +80,7 @@ const App = () => {
 
 export default App;
 
-// ГЛОБАЛЬНЫЕ
+// ОШИБКИ
 // не переносится тема и текст из Main в Tickets
-
-// ЛОКАЛЬНЫЕ
-// не отображаются сохранённые файлы в Tickets
+// не отображаются сохранённые загруженные файлы в Tickets в спец.блоке
 // обращение блокируется при нажатии на верную кнопку, но блокируются все, а не выбранное + данные не сохраняются в localeStorage
