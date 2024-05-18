@@ -4,7 +4,7 @@ import { categories } from '../../utils/constants';
 import styles from './Main.module.scss';
 
 const Main = props => {
-  const { setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
+  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
   const [selectedCategory, setSelectedCategory] = useState('');
   const [customCategory, setCustomCategory] = useState('');
   const [showCustomInput, setShowCustomInput] = useState(false);

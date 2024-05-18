@@ -6,7 +6,7 @@ import eyeClose from '../../images/icons/eye-close.png';
 import styles from './Login.module.scss';
 
 const Login = props => {
-  const { setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
+  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
   const { errors, isValid, handleChange, resetForm, formValue } =
     useValidation();
   const navigate = useNavigate();
@@ -48,8 +48,8 @@ const Login = props => {
       enteredLogin === hardcodedCredentials.login &&
       enteredPassword === hardcodedCredentials.password
     ) {
-      setIsLoggedIn(true); // НЕ РАБОТАЕТ
-      /*localStorage.setItem('isLoggedIn', isLoggedIn); */ // НЕ РАБОТАЕТ
+      setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', isLoggedIn);
       localStorage.setItem('userLogin', formValue.login);
       localStorage.setItem('userPassword', formValue.password);
 

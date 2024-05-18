@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import InfoPopup from '../InfoPopup/InfoPopup';
 import styles from './Tickets.module.scss';
 
 const Tickets = props => {
-  const { setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
+  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText, isEditable, setIsEditable } = props;
   const { id } = useParams();
   const [textComment, setTextComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -93,6 +94,10 @@ const Tickets = props => {
     setInfoPopup(true);
   };
 
+  const handleOk = () => {
+    setIsEditable(false);
+  };
+
   return (
     <section className={styles.tickets}>
       <div className={styles.container}>
@@ -102,6 +107,8 @@ const Tickets = props => {
           <p className={styles.text}>Тема: {selectedTicket.category}</p>
           <p className={styles.text}>Текст: {selectedTicket.text}</p>
         </div>
+
+        {isEditable ? (
 
         <form className={styles.addContainer} noValidate>
           <label className={styles.label}>
@@ -137,6 +144,10 @@ const Tickets = props => {
             </button>
           </div>
         </form>
+ ) : (
+  <p className={styles.blokDiscription}>Обращение закрыто для редактирования</p>
+)}
+
       </div>
       <div className={styles.container}>
         <h3 className={styles.title}>Список комментариев</h3>
@@ -179,8 +190,13 @@ const Tickets = props => {
       <Link className={styles.link} to='/'>
         <span className={styles.linkText}>вернуться на главную страницу</span>
       </Link>
+      <InfoPopup
+        isBlock={isEditable}
+        onSubmit={handleOk}
+      />
     </section>
   );
+  
 };
 
 export default Tickets;

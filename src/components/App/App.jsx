@@ -11,12 +11,13 @@ const App = () => {
   const [infoPopup, setInfoPopup] = useState(false);
   const [infoPopupText, setInfoPopupText] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isEditable, setIsEditable] = useState(true);
 
-  // проверка авторизации - НЕ РАБОТАЕТ
+  // проверка авторизации
   useEffect(() => {
-    const storedLoggedIn = localStorage.getItem('isLoggedIn');
-    if (storedLoggedIn) {
-      setIsLoggedIn(JSON.parse(storedLoggedIn));
+    const savedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    if (savedIsLoggedIn) {
+      setIsLoggedIn(savedIsLoggedIn === 'true');
     }
   }, []);
 
@@ -36,6 +37,7 @@ const App = () => {
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
                 setIsLoggedIn={setIsLoggedIn}
+                isLoggedIn={isLoggedIn}
               />
             ) : (
               <Navigate to='/login' replace />
@@ -50,6 +52,9 @@ const App = () => {
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
                 setIsLoggedIn={setIsLoggedIn}
+                isLoggedIn={isLoggedIn}
+                setIsEditable={setIsEditable}
+                isEditable={isEditable} 
               />
             ) : (
               <Navigate to='/login' replace />
@@ -63,6 +68,7 @@ const App = () => {
               setInfoPopup={setInfoPopup}
               setInfoPopupText={setInfoPopupText}
               setIsLoggedIn={setIsLoggedIn}
+              isLoggedIn={isLoggedIn}
             />
           }
         />
@@ -75,9 +81,18 @@ const App = () => {
         isOpen={infoPopup}
         onClose={closeInfoPopup}
         onSubmit={closeInfoPopup}
+        setIsEditable={setIsEditable}
       />
     </div>
   );
 };
 
 export default App;
+
+// ГЛОБАЛЬНЫЕ
+// слетает авторизация при перезагрузке страницы - сохраняет в localeStorage, но не достаёт
+// не переносится тема и текст из Main в Tickets
+
+// ЛОКАЛЬНЫЕ
+// обращение блокируется при нажатии на верную кнопку, но блокируются все, а не выбранное + данные не сохраняются в localeStorage
+// не отображаются сохранённые файлы в Tickets
