@@ -4,7 +4,14 @@ import InfoPopup from '../InfoPopup/InfoPopup';
 import styles from './Tickets.module.scss';
 
 const Tickets = props => {
-  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText, isEditable, setIsEditable } = props;
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    setInfoPopup,
+    setInfoPopupText,
+    isEditable,
+    setIsEditable
+  } = props;
   const { id } = useParams();
   const [textComment, setTextComment] = useState('');
   const [comments, setComments] = useState([]);
@@ -109,45 +116,45 @@ const Tickets = props => {
         </div>
 
         {isEditable ? (
-
-        <form className={styles.addContainer} noValidate>
-          <label className={styles.label}>
-            <h6 className={styles.discription}>Добавить комментарий</h6>
-            <input
-              id='input-text'
-              type='text'
-              name='text'
-              value={textComment}
-              onChange={handleInputChange}
-              className={styles.input}
-              placeholder='Текст до 1 000 символов'
-              required
-            />
-          </label>
-          <div className={styles.buttons}>
-            <button
-              name='button'
-              type='submit'
-              disabled={isInputEmpty ? true : false}
-              onClick={handleAddComment}
-              className={styles.btn}
-            >
-              Добавить комментарий
-            </button>
-            <button
-              name='button'
-              type='submit'
-              onClick={handleCloseRequest}
-              className={styles.btn}
-            >
-              Закрыть обращение
-            </button>
-          </div>
-        </form>
- ) : (
-  <p className={styles.blokDiscription}>Обращение закрыто для редактирования</p>
-)}
-
+          <form className={styles.addContainer} noValidate>
+            <label className={styles.label}>
+              <h6 className={styles.discription}>Добавить комментарий</h6>
+              <input
+                id='input-text'
+                type='text'
+                name='text'
+                value={textComment}
+                onChange={handleInputChange}
+                className={styles.input}
+                placeholder='Текст до 1 000 символов'
+                required
+              />
+            </label>
+            <div className={styles.buttons}>
+              <button
+                name='button'
+                type='submit'
+                disabled={isInputEmpty ? true : false}
+                onClick={handleAddComment}
+                className={styles.btn}
+              >
+                Добавить комментарий
+              </button>
+              <button
+                name='button'
+                type='submit'
+                onClick={handleCloseRequest}
+                className={styles.btn}
+              >
+                Закрыть обращение
+              </button>
+            </div>
+          </form>
+        ) : (
+          <p className={styles.blokDiscription}>
+            Обращение закрыто для редактирования
+          </p>
+        )}
       </div>
       <div className={styles.container}>
         <h3 className={styles.title}>Список комментариев</h3>
@@ -190,13 +197,9 @@ const Tickets = props => {
       <Link className={styles.link} to='/'>
         <span className={styles.linkText}>вернуться на главную страницу</span>
       </Link>
-      <InfoPopup
-        isBlock={isEditable}
-        onSubmit={handleOk}
-      />
+      <InfoPopup isBlock={isEditable} onSubmit={handleOk} />
     </section>
   );
-  
 };
 
 export default Tickets;

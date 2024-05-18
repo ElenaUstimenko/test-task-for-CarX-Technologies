@@ -10,16 +10,11 @@ import styles from './App.module.scss';
 const App = () => {
   const [infoPopup, setInfoPopup] = useState(false);
   const [infoPopupText, setInfoPopupText] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditable, setIsEditable] = useState(true);
 
   // проверка авторизации
-  useEffect(() => {
-    const savedIsLoggedIn = localStorage.getItem('isLoggedIn');
-    if (savedIsLoggedIn) {
-      setIsLoggedIn(savedIsLoggedIn === 'true');
-    }
-  }, []);
+  const initialLoggedIn = !!localStorage.getItem('isLoggedIn');
+  const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
 
   // info popup
   const closeInfoPopup = () => {
@@ -54,7 +49,7 @@ const App = () => {
                 setIsLoggedIn={setIsLoggedIn}
                 isLoggedIn={isLoggedIn}
                 setIsEditable={setIsEditable}
-                isEditable={isEditable} 
+                isEditable={isEditable}
               />
             ) : (
               <Navigate to='/login' replace />
@@ -90,7 +85,6 @@ const App = () => {
 export default App;
 
 // ГЛОБАЛЬНЫЕ
-// слетает авторизация при перезагрузке страницы - сохраняет в localeStorage, при перезагрузке видит true, но перенаправляет на /login
 // не переносится тема и текст из Main в Tickets
 
 // ЛОКАЛЬНЫЕ

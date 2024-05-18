@@ -2,7 +2,13 @@
 import styles from './InfoPopup.module.scss';
 
 const InfoPopup = props => {
-  const { title, isOpen, onClose, onSubmit, setIsEditable/*, openedRequestId*/ } = props;
+  const {
+    title,
+    isOpen,
+    onClose,
+    onSubmit,
+    setIsEditable /*, openedRequestId*/
+  } = props;
   /*const { id } = useParams();*/
 
   const handleSubmit = e => {
@@ -26,24 +32,21 @@ const InfoPopup = props => {
       >
         <form className={styles.container} onSubmit={e => handleSubmit(e)}>
           <h2 className={styles.title}>{title}</h2>
-          {
-          window.location.pathname.startsWith('/tickets/') && window.location.pathname.split('/').length === 3
-            ? (
-              <>
-                <button onClick={onClose} className={styles.link}>
-                  вернуться назад
-                </button>
-                <button onClick={handlePopupClose} className={styles.btn}>
-                  Закрыть обращение
-                </button>
-              </>
-            )
-            : (
-              <button type='submit' className={styles.btn}>
-                ОК
+          {window.location.pathname.startsWith('/tickets/') &&
+          window.location.pathname.split('/').length === 3 ? (
+            <>
+              <button onClick={onClose} className={styles.link}>
+                вернуться назад
               </button>
-            )
-        }
+              <button onClick={handlePopupClose} className={styles.btn}>
+                Закрыть обращение
+              </button>
+            </>
+          ) : (
+            <button type='submit' className={styles.btn}>
+              ОК
+            </button>
+          )}
         </form>
       </div>
     </>
