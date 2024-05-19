@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/test-task-for-CarX-Technologies/static/css/main.b44a41c6.css",
+    "main.css": "/test-task-for-CarX-Technologies/static/css/main.643c8c5d.css",
     "main.js": "/test-task-for-CarX-Technologies/static/js/main.9a8497a4.js",
     "index.html": "/test-task-for-CarX-Technologies/index.html",
-    "main.b44a41c6.css.map": "/test-task-for-CarX-Technologies/static/css/main.b44a41c6.css.map",
+    "main.643c8c5d.css.map": "/test-task-for-CarX-Technologies/static/css/main.643c8c5d.css.map",
     "main.9a8497a4.js.map": "/test-task-for-CarX-Technologies/static/js/main.9a8497a4.js.map"
   },
   "entrypoints": [
-    "static/css/main.b44a41c6.css",
+    "static/css/main.643c8c5d.css",
     "static/js/main.9a8497a4.js"
   ]
 }
