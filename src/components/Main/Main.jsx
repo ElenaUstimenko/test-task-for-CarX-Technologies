@@ -136,6 +136,7 @@ const Main = props => {
               id='input-text'
               type='text'
               name='text'
+              autoComplete='off'
               value={text}
               onChange={handleInputChange}
               className={styles.input}

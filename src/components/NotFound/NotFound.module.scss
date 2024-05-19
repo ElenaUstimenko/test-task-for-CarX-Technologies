@@ -16,7 +16,9 @@
 
 .link {
   position: relative;
-  width: calc(40vw - 10px);
+  width: calc(80vw - 10px);
+  max-width: 900px;
+  min-width: 280px;
   padding: 10px 20px;
   margin: 0 10px;
   border: var(--border);
