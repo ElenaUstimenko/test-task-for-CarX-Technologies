@@ -1,22 +1,15 @@
 import styles from './InfoPopup.module.scss';
 
 const InfoPopup = props => {
-  const { 
-    title, 
-    isOpen, 
-    onClose, 
-    onSubmit, 
-    setIsEditable 
-  } = props;
+  const { title, isOpen, onClose, onSubmit } = props;
 
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit();
   };
 
-  // закрытие с блокировкой для редактирования
   const handlePopupClose = () => {
-    setIsEditable(false);
+    onClose();
     onSubmit();
   };
 
@@ -28,15 +21,19 @@ const InfoPopup = props => {
       <div
         className={`${styles.infoPopup} ${isOpen ? styles.infoPopupOpened : ''}`}
       >
-        <form className={styles.container} onSubmit={e => handleSubmit(e)}>
+        <form className={styles.container} onSubmit={handleSubmit}>
           <h2 className={styles.title}>{title}</h2>
           {window.location.pathname.startsWith('/tickets/') &&
           window.location.pathname.split('/').length === 3 ? (
             <>
-              <button onClick={onClose} className={styles.link}>
+              <button type='button' onClick={onClose} className={styles.link}>
                 вернуться назад
               </button>
-              <button onClick={handlePopupClose} className={styles.btn}>
+              <button
+                type='button'
+                onClick={handlePopupClose}
+                className={styles.btn}
+              >
                 Закрыть обращение
               </button>
             </>

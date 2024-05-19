@@ -10,7 +10,6 @@ import styles from './App.module.scss';
 const App = () => {
   const [infoPopup, setInfoPopup] = useState(false);
   const [infoPopupText, setInfoPopupText] = useState('');
-  const [isEditable, setIsEditable] = useState(true);
 
   // проверка авторизации
   const initialLoggedIn = !!localStorage.getItem('isLoggedIn');
@@ -42,9 +41,9 @@ const App = () => {
           element={
             isLoggedIn ? (
               <Tickets
+                infoPopupText={infoPopupText}
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
-                isEditable={isEditable}
               />
             ) : (
               <Navigate to='/login' replace />
@@ -71,15 +70,9 @@ const App = () => {
         isOpen={infoPopup}
         onClose={closeInfoPopup}
         onSubmit={closeInfoPopup}
-        setIsEditable={setIsEditable}
       />
     </div>
   );
 };
 
 export default App;
-
-// ОШИБКИ
-// не переносится тема и текст из Main в Tickets
-// не отображаются сохранённые загруженные файлы в Tickets в спец.блоке в виде имён
-// обращение блокируется при нажатии на верную кнопку, но блокируются все, а не выбранное + данные не сохраняются в localeStorage

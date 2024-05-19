@@ -55,7 +55,7 @@ const Main = props => {
     }
   }, []);
 
-  // добавление обращения, сохранение в localStorage
+  // добавление обращения
   const handleSubmit = e => {
     e.preventDefault();
 

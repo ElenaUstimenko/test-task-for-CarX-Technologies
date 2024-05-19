@@ -4,54 +4,45 @@ import InfoPopup from '../InfoPopup/InfoPopup';
 import styles from './Tickets.module.scss';
 
 const Tickets = props => {
-  const { 
-    setInfoPopup, 
-    setInfoPopupText, 
-    isEditable
-  } = props;
+  const { infoPopupText, setInfoPopupText } = props;
   const { id } = useParams();
   const [textComment, setTextComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isInputEmpty, setIsInputEmpty] = useState(true);
   const [tickets, setTickets] = useState([]);
-  const [attachedFiles, setAttachedFiles] = useState([]);
-  const [blockedTickets, setBlockedTickets] = useState({});
   const [selectedTicket, setSelectedTicket] = useState({
     category: '',
     text: '',
+    blocked: false,
     files: []
   });
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  
   // список комментариев и тикетов
   useEffect(() => {
-    
     const storedComments = JSON.parse(localStorage.getItem('comments'));
     const storedTickets = JSON.parse(localStorage.getItem('tickets'));
-
     if (storedComments) {
       setComments(storedComments);
     }
 
-    if (storedTickets) {
+    if (storedTickets.length) {
       setTickets(storedTickets);
- 
-      // НЕ РАБОТАЕТ - тема, текст и файлы не появляются
-      const selected = storedTickets.find(ticket => ticket.id === id);
-    
-    if (selected) {
-      setSelectedTicket({
-        ...selectedTicket,
-        id: selected.id,
-        category: selected.category,
-        text: selected.text,
-        files: selected.files
-      });
+      const selected = storedTickets.find(ticket => ticket.id == id);
+      if (selected?.id) {
+        setSelectedTicket({
+          ...selectedTicket,
+          id: selected.id,
+          category: selected.category,
+          text: selected.text,
+          files: selected.files,
+          blocked: selected.blocked
+        });
+      }
     }
-    }
-  }, [id, selectedTicket]);
+  }, [id]);
 
-  // добавление комментария, сохранение в localStorage
+  // добавление комментария
   const handleAddComment = e => {
     e.preventDefault();
     if (textComment.trim() !== '') {
@@ -82,31 +73,44 @@ const Tickets = props => {
     setInfoPopupText(
       'После закрытия обращения добавление новых комментариев невозможно.'
     );
-    setInfoPopup(true);
+    setIsPopupOpen(true);
   };
 
-  // НЕ РАБОТАЕТ - блокируются все обращения, до перезагрузки страницы
   const handleBlockRequest = () => {
-    const updatedBlockedTickets = {
-      ...blockedTickets,
-      [id]: true
-    };
-    setBlockedTickets(updatedBlockedTickets);
-    localStorage.setItem('blockedTickets', JSON.stringify(updatedBlockedTickets));
+    const updatedTicket = { ...selectedTicket, blocked: true };
+    const updatedTickets = tickets.map(ticket =>
+      ticket.id === updatedTicket.id ? updatedTicket : ticket
+    );
+    setSelectedTicket(updatedTicket);
+    setTickets(updatedTickets);
+    localStorage.setItem('tickets', JSON.stringify(updatedTickets));
   };
 
-console.log(tickets)
+  const handlePopupClose = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
     <section className={styles.tickets}>
       <div className={styles.container}>
         <h3 className={styles.title}>Информация об обращении: {id}</h3>
 
         <div className={styles.mainContainer}>
-          <p className={styles.text}>Тема: {selectedTicket.category}</p>
-          <p className={styles.text}>Текст: {selectedTicket.text}</p>
+          <p className={styles.text}>
+            <span className={styles.textTitile}>Тема:</span>
+            {selectedTicket.category}
+          </p>
+          <p className={styles.text}>
+            <span className={styles.textTitile}>Текст:</span>
+            {selectedTicket.text}
+          </p>
         </div>
 
-        {isEditable && !blockedTickets[id] ? (
+        {selectedTicket.blocked ? (
+          <p className={styles.blokDiscription}>
+            Обращение закрыто для редактирования
+          </p>
+        ) : (
           <form className={styles.addContainer} noValidate>
             <label className={styles.label}>
               <h6 className={styles.discription}>Добавить комментарий</h6>
@@ -116,6 +120,7 @@ console.log(tickets)
                 name='text'
                 value={textComment}
                 onChange={handleInputChange}
+                autoComplete='off'
                 className={styles.input}
                 placeholder='Текст до 1 000 символов'
                 required
@@ -125,7 +130,7 @@ console.log(tickets)
               <button
                 name='button'
                 type='submit'
-                disabled={isInputEmpty ? true : false}
+                disabled={isInputEmpty}
                 onClick={handleAddComment}
                 className={styles.btn}
               >
@@ -141,10 +146,6 @@ console.log(tickets)
               </button>
             </div>
           </form>
-        ) : (
-          <p className={styles.blokDiscription}>
-            Обращение закрыто для редактирования
-          </p>
         )}
       </div>
       <div className={styles.container}>
@@ -154,7 +155,7 @@ console.log(tickets)
             .filter(comment => comment.ticketId === id)
             .map((comment, index) => (
               <li key={index} className={styles.commentItem}>
-                <p>{comment.text}</p> 
+                <p>{comment.text}</p>
                 <p className={styles.commentItemDate}>{comment.date}</p>
               </li>
             ))}
@@ -163,11 +164,11 @@ console.log(tickets)
       <div className={styles.container}>
         <h3 className={styles.title}>Прикреплённые файлы</h3>
         <ul className={styles.fileList}>
-        {attachedFiles.map((file, index) => (
-      <li key={index} className={styles.fileItem}>
-        <p>{file.name}</p>
-      </li>
-    ))}
+          {selectedTicket?.files?.map((file, index) => (
+            <li key={index} className={styles.fileItem}>
+              {file.name}
+            </li>
+          ))}
         </ul>
       </div>
       <div className={styles.container}>
@@ -187,7 +188,12 @@ console.log(tickets)
       <Link className={styles.link} to='/'>
         <p className={styles.linkText}>вернуться на главную страницу</p>
       </Link>
-      <InfoPopup isBlock={isEditable} onSubmit={handleBlockRequest} />
+      <InfoPopup
+        isOpen={isPopupOpen}
+        title={infoPopupText}
+        onClose={handlePopupClose}
+        onSubmit={handleBlockRequest}
+      />
     </section>
   );
 };

@@ -6,12 +6,7 @@ import eyeClose from '../../images/icons/eye-close.png';
 import styles from './Login.module.scss';
 
 const Login = props => {
-  const { 
-    isLoggedIn, 
-    setIsLoggedIn, 
-    setInfoPopup, 
-    setInfoPopupText 
-  } = props;
+  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
   const { errors, isValid, handleChange, resetForm, formValue } =
     useValidation();
   const navigate = useNavigate();

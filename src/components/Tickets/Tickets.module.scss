@@ -53,6 +53,11 @@
   font-size: var(--font-size-third);
 }
 
+.textTitile {
+  color: var(--text-color-secondary);
+  margin-right: 10px;
+}
+
 .label {
   display: flex;
   flex-direction: column;
