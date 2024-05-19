@@ -22,7 +22,7 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      <Routes>
+      <Routes basename='/test-task-for-CarX-Technologies'>
         <Route
           path='/'
           element={
