@@ -136,6 +136,11 @@
   text-overflow: ellipsis;
 }
 
+.commentItemDate {
+  color: var(--text-color-third);
+  margin-top: 6px;
+}
+
 .link {
   width: calc(80vw - 10px);
   max-width: 900px;

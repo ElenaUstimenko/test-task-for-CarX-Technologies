@@ -7,7 +7,7 @@ const NotFound = () => {
       <h1 className={styles.titleNumber}>404</h1>
       <h2 className={styles.titleText}>Страница не найдена...</h2>
       <Link className={styles.link} to='/'>
-        <span className={styles.linkText}>вернуться на главную страницу</span>
+        <p className={styles.linkText}>вернуться на главную страницу</p>
       </Link>
     </div>
   );

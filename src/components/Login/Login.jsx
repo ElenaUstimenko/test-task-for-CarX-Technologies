@@ -6,7 +6,12 @@ import eyeClose from '../../images/icons/eye-close.png';
 import styles from './Login.module.scss';
 
 const Login = props => {
-  const { isLoggedIn, setIsLoggedIn, setInfoPopup, setInfoPopupText } = props;
+  const { 
+    isLoggedIn, 
+    setIsLoggedIn, 
+    setInfoPopup, 
+    setInfoPopupText 
+  } = props;
   const { errors, isValid, handleChange, resetForm, formValue } =
     useValidation();
   const navigate = useNavigate();
@@ -84,7 +89,7 @@ const Login = props => {
               required
               autoComplete='off'
               pattern='.{5,}'
-              title='Пароль должен состоять из не менее чем 5 символов.'
+              title='Логин должен состоять из не менее чем 5 символов.'
               value={formValue.login || ''}
               onChange={handleInputChange}
             />

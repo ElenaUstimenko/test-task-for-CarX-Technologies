@@ -177,9 +177,9 @@ const Main = props => {
           {tickets.map(ticket => (
             <li key={ticket.id}>
               <Link className={styles.ticketItem} to={`/tickets/${ticket.id}`}>
-                <div>Обращение: {ticket.id}</div>
-                <div>Тема: {ticket.category}</div>
-                <div>Текст: {ticket.text}</div>
+                <p>Обращение: {ticket.id}</p>
+                <p>Тема: {ticket.category}</p>
+                <p>Текст: {ticket.text}</p>
               </Link>
             </li>
           ))}

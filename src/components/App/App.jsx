@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import Tickets from '../Tickets/Tickets';
@@ -44,7 +44,6 @@ const App = () => {
               <Tickets
                 setInfoPopup={setInfoPopup}
                 setInfoPopupText={setInfoPopupText}
-                setIsEditable={setIsEditable}
                 isEditable={isEditable}
               />
             ) : (
@@ -82,5 +81,5 @@ export default App;
 
 // ОШИБКИ
 // не переносится тема и текст из Main в Tickets
-// не отображаются сохранённые загруженные файлы в Tickets в спец.блоке
+// не отображаются сохранённые загруженные файлы в Tickets в спец.блоке в виде имён
 // обращение блокируется при нажатии на верную кнопку, но блокируются все, а не выбранное + данные не сохраняются в localeStorage

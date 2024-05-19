@@ -4,21 +4,28 @@ import InfoPopup from '../InfoPopup/InfoPopup';
 import styles from './Tickets.module.scss';
 
 const Tickets = props => {
-  const { setInfoPopup, setInfoPopupText, isEditable, setIsEditable } = props;
+  const { 
+    setInfoPopup, 
+    setInfoPopupText, 
+    isEditable
+  } = props;
   const { id } = useParams();
   const [textComment, setTextComment] = useState('');
   const [comments, setComments] = useState([]);
   const [isInputEmpty, setIsInputEmpty] = useState(true);
   const [tickets, setTickets] = useState([]);
   const [attachedFiles, setAttachedFiles] = useState([]);
+  const [blockedTickets, setBlockedTickets] = useState({});
   const [selectedTicket, setSelectedTicket] = useState({
     category: '',
     text: '',
     files: []
   });
 
+  
   // список комментариев и тикетов
   useEffect(() => {
+    
     const storedComments = JSON.parse(localStorage.getItem('comments'));
     const storedTickets = JSON.parse(localStorage.getItem('tickets'));
 
@@ -28,37 +35,21 @@ const Tickets = props => {
 
     if (storedTickets) {
       setTickets(storedTickets);
-
-      const allFiles = storedTickets.reduce((files, ticket) => {
-        return files.concat(
-          ticket.files.map(file => ({ ...file, ticketId: ticket.id }))
-        );
-      }, []);
-
-      setAttachedFiles(allFiles);
+ 
+      // НЕ РАБОТАЕТ - тема, текст и файлы не появляются
+      const selected = storedTickets.find(ticket => ticket.id === id);
+    
+    if (selected) {
+      setSelectedTicket({
+        ...selectedTicket,
+        id: selected.id,
+        category: selected.category,
+        text: selected.text,
+        files: selected.files
+      });
     }
-  }, []);
-
-  // добавление инфо по выбранному тикету
-  useEffect(() => {
-    const storedTickets = JSON.parse(localStorage.getItem('tickets'));
-
-    if (storedTickets) {
-      const ticket = storedTickets.find(ticket => ticket.id === id);
-
-      if (ticket) {
-        setSelectedTicket({
-          category: ticket.category,
-          text: ticket.text,
-          files: ticket.files
-        });
-
-        setAttachedFiles(
-          ticket.files.map(file => ({ ...file, ticketId: ticket.id }))
-        );
-      }
     }
-  }, [id]);
+  }, [id, selectedTicket]);
 
   // добавление комментария, сохранение в localStorage
   const handleAddComment = e => {
@@ -94,10 +85,17 @@ const Tickets = props => {
     setInfoPopup(true);
   };
 
-  const handleOk = () => {
-    setIsEditable(false);
+  // НЕ РАБОТАЕТ - блокируются все обращения, до перезагрузки страницы
+  const handleBlockRequest = () => {
+    const updatedBlockedTickets = {
+      ...blockedTickets,
+      [id]: true
+    };
+    setBlockedTickets(updatedBlockedTickets);
+    localStorage.setItem('blockedTickets', JSON.stringify(updatedBlockedTickets));
   };
 
+console.log(tickets)
   return (
     <section className={styles.tickets}>
       <div className={styles.container}>
@@ -108,7 +106,7 @@ const Tickets = props => {
           <p className={styles.text}>Текст: {selectedTicket.text}</p>
         </div>
 
-        {isEditable ? (
+        {isEditable && !blockedTickets[id] ? (
           <form className={styles.addContainer} noValidate>
             <label className={styles.label}>
               <h6 className={styles.discription}>Добавить комментарий</h6>
@@ -156,7 +154,8 @@ const Tickets = props => {
             .filter(comment => comment.ticketId === id)
             .map((comment, index) => (
               <li key={index} className={styles.commentItem}>
-                <span>{comment.text}</span> - <span>{comment.date}</span>
+                <p>{comment.text}</p> 
+                <p className={styles.commentItemDate}>{comment.date}</p>
               </li>
             ))}
         </ul>
@@ -164,13 +163,11 @@ const Tickets = props => {
       <div className={styles.container}>
         <h3 className={styles.title}>Прикреплённые файлы</h3>
         <ul className={styles.fileList}>
-          {attachedFiles
-            .filter(file => file.ticketId === id)
-            .map((file, index) => (
-              <li key={index} className={styles.fileItem}>
-                {file.name}
-              </li>
-            ))}
+        {attachedFiles.map((file, index) => (
+      <li key={index} className={styles.fileItem}>
+        <p>{file.name}</p>
+      </li>
+    ))}
         </ul>
       </div>
       <div className={styles.container}>
@@ -179,18 +176,18 @@ const Tickets = props => {
           {tickets.map(ticket => (
             <li key={ticket.id}>
               <Link className={styles.ticketItem} to={`/tickets/${ticket.id}`}>
-                <div>Обращение: {ticket.id}</div>
-                <div>Тема: {ticket.category}</div>
-                <div>Текст: {ticket.text}</div>
+                <p>Обращение: {ticket.id}</p>
+                <p>Тема: {ticket.category}</p>
+                <p>Текст: {ticket.text}</p>
               </Link>
             </li>
           ))}
         </ul>
       </div>
       <Link className={styles.link} to='/'>
-        <span className={styles.linkText}>вернуться на главную страницу</span>
+        <p className={styles.linkText}>вернуться на главную страницу</p>
       </Link>
-      <InfoPopup isBlock={isEditable} onSubmit={handleOk} />
+      <InfoPopup isBlock={isEditable} onSubmit={handleBlockRequest} />
     </section>
   );
 };

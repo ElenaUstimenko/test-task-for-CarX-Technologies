@@ -1,13 +1,20 @@
 import styles from './InfoPopup.module.scss';
 
 const InfoPopup = props => {
-  const { title, isOpen, onClose, onSubmit, setIsEditable } = props;
+  const { 
+    title, 
+    isOpen, 
+    onClose, 
+    onSubmit, 
+    setIsEditable 
+  } = props;
 
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit();
   };
 
+  // закрытие с блокировкой для редактирования
   const handlePopupClose = () => {
     setIsEditable(false);
     onSubmit();
