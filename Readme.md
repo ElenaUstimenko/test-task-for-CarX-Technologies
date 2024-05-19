@@ -6,6 +6,10 @@ _Учётные данные (login/password - admin/admin) для доступ�
 
 ## Link:
 
+
+https://elenaustimenko.github.io/test-task-for-CarX-Technologies/
+
+
 ## Stack:
 
 ✔️ React
