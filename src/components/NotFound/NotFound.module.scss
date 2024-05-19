@@ -11,12 +11,12 @@
 }
 
 .titleText {
-  width: calc(40vw - 10px);
   margin-bottom: 60px;
 }
 
 .link {
   position: relative;
+  width: calc(40vw - 10px);
   padding: 10px 20px;
   margin: 0 10px;
   border: var(--border);
